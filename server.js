@@ -40,6 +40,17 @@ app.post("/api/tables", (req, res) => {
   }
 });
 
+app.delete("/api/tables", (req, res) => {
+  console.log(tables);
+  tables.shift();
+  console.log(tables);
+  const next = waitlist.shift();
+  console.log(tables);
+  tables.push(next);
+  console.log(tables);
+  res.json(console.log("deleting"));
+});
+
 // app.delete(/api/tables, (req, res, val) => {
 // const next = tablves[al]
 // next.remove
