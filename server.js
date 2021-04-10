@@ -28,9 +28,13 @@ app.post("/api/tables", (req, res) => {
   // req.body hosts is equal to the JSON post sent from the user
   // This works because of our body parsing middleware
   const newRes = req.body;
-
-  tables.push(newRes);
-  res.json(tables);
+  if (tables.length < 5) {
+    tables.push(newRes);
+    res.json(tables);
+  } else {
+    waitlist.push(newRes);
+    res.json(waitlist);
+  }
 });
 // Starts the server to begin listening
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
