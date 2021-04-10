@@ -30,10 +30,12 @@ app.post("/api/tables", (req, res) => {
   const newRes = req.body;
   if (tables.length < 5) {
     tables.push(newRes);
-    res.json(tables);
+    res.json("Reservation confirmed, we have you at a table");
   } else {
     waitlist.push(newRes);
-    res.json(waitlist);
+    res.json(
+      "Reservation received, no tables available, but you are on the waiting list"
+    );
   }
 });
 // Starts the server to begin listening
