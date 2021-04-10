@@ -38,24 +38,62 @@
             >
           </div>
         </div>
-        <div class="row">
-          <table class="table">
-            <thead>
-              <tr class="text-center">
-                <th scope="col">Name</th>
-                <th scope="col">Number</th>
-                <th scope="col">Email</th>
-                <th scope="col">ID</th>
-              </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-          </table>
+
+        <!--TABLES-->
+
+        <div>
+          <div class="row">
+            <table class="table">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">Name</th>
+                  <th scope="col">Number</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">ID</th>
+                </tr>
+              </thead>
+              <tbody id="tableResBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!--WAITLIST-->
+
+        <div>
+          <div class="row">
+            <table class="table">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">Name</th>
+                  <th scope="col">Number</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">ID</th>
+                </tr>
+              </thead>
+              <tbody id="tableWaitBody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
       </div>
+
+      <!--JAVASCRIPT-->
       <script type="text/javascript">
-        const table = document.getElementById("tableBody");
-        function init() {
+        // const table = document.getElementById("tableResBody");
+        /* init
+        getTables
+        getWaitlist
+        */
+       function init() {
+         getTables();
+         getWaitlist();
+       }
+       /*
+
+        getTables
+        render table code
+        */
+        function getTables() {
           fetch(`/api/tables`, {
             method: "GET",
             headers: {
@@ -65,26 +103,85 @@
             .then((response) => response.json())
             .then((data) => {
               for (res of data) {
-                const target = table;
-                const row = document.createElement("tr");
-                const name = document.createElement("td");
-                const email = document.createElement("td");
-                const id = document.createElement("td");
-                const phone = document.createElement("td");
-                row.setAttribute("class", "text-center");
-                name.setAttribute("scope", "row");
-                name.textContent = res.name;
-                email.textContent = res.email;
-                id.textContent = res.id;
-                phone.textContent = res.phone;
-                row.appendChild(name);
-                row.appendChild(email);
-                row.appendChild(id);
-                row.appendChild(phone);
-                target.appendChild(row);
-              }
-            });
+                const table = document.getElementById("tableResBody");
+                renderCode(res, table)
+            }
+          })
         }
+
+        function getWaitlist() {
+          fetch(`/api/waitlist`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              for (res of data) {
+                const table = document.getElementById("tableWaitBody");
+                renderCode(res, table)
+            }
+          })
+        }
+        /*
+
+        getWaitlist
+        render waitlist code
+        */
+       /*
+        function renderCode
+        */
+        function renderCode(res, table) {
+          const target = table;
+          const row = document.createElement("tr");
+          const name = document.createElement("td");
+          const email = document.createElement("td");
+          const id = document.createElement("td");
+          const phone = document.createElement("td");
+          row.setAttribute("class", "text-center");
+          name.setAttribute("scope", "row");
+          name.textContent = res.name;
+          email.textContent = res.email;
+          id.textContent = res.id;
+          phone.textContent = res.phone;
+          row.appendChild(name);
+          row.appendChild(email);
+          row.appendChild(id);
+          row.appendChild(phone);
+          target.appendChild(row);
+        }
+
+        // function init() {
+        //   fetch(`/api/tables`, {
+        //     method: "GET",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //   })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //       for (res of data) {
+        //         const target = table;
+        //         const row = document.createElement("tr");
+        //         const name = document.createElement("td");
+        //         const email = document.createElement("td");
+        //         const id = document.createElement("td");
+        //         const phone = document.createElement("td");
+        //         row.setAttribute("class", "text-center");
+        //         name.setAttribute("scope", "row");
+        //         name.textContent = res.name;
+        //         email.textContent = res.email;
+        //         id.textContent = res.id;
+        //         phone.textContent = res.phone;
+        //         row.appendChild(name);
+        //         row.appendChild(email);
+        //         row.appendChild(id);
+        //         row.appendChild(phone);
+        //         target.appendChild(row);
+        //       }
+        //     });
+        // }
         init();
       </script>
   </body>
