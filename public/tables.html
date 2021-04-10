@@ -38,5 +38,54 @@
             >
           </div>
         </div>
+        <div class="row">
+          <table class="table">
+            <thead>
+              <tr class="text-center">
+                <th scope="col">Name</th>
+                <th scope="col">Number</th>
+                <th scope="col">Email</th>
+                <th scope="col">ID</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+      </div>
+      <script type="text/javascript">
+        const table = document.getElementById("tableBody");
+        function init() {
+          fetch(`/api/tables`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              for (res of data) {
+                const target = table;
+                const row = document.createElement("tr");
+                const name = document.createElement("td");
+                const email = document.createElement("td");
+                const id = document.createElement("td");
+                const phone = document.createElement("td");
+                row.setAttribute("class", "text-center");
+                name.setAttribute("scope", "row");
+                name.textContent = res.name;
+                email.textContent = res.email;
+                id.textContent = res.id;
+                phone.textContent = res.phone;
+                row.appendChild(name);
+                row.appendChild(email);
+                row.appendChild(id);
+                row.appendChild(phone);
+                target.appendChild(row);
+              }
+            });
+        }
+        init();
+      </script>
   </body>
 </html>
