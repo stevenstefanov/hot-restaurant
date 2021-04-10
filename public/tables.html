@@ -79,20 +79,13 @@
 
       <!--JAVASCRIPT-->
       <script type="text/javascript">
-        // const table = document.getElementById("tableResBody");
-        /* init
-        getTables
-        getWaitlist
-        */
+        // INIT
        function init() {
          getTables();
          getWaitlist();
        }
-       /*
 
-        getTables
-        render table code
-        */
+       // GET TABLES
         function getTables() {
           fetch(`/api/tables`, {
             method: "GET",
@@ -104,11 +97,14 @@
             .then((data) => {
               for (res of data) {
                 const table = document.getElementById("tableResBody");
+                console.log(data.indexOf(res));
                 renderCode(res, table)
+                // index
             }
           })
         }
 
+        // GET WAITLIST
         function getWaitlist() {
           fetch(`/api/waitlist`, {
             method: "GET",
@@ -124,14 +120,8 @@
             }
           })
         }
-        /*
-
-        getWaitlist
-        render waitlist code
-        */
-       /*
-        function renderCode
-        */
+        
+       // RENDER ARRAY DATA
         function renderCode(res, table) {
           const target = table;
           const row = document.createElement("tr");
@@ -149,39 +139,18 @@
           row.appendChild(email);
           row.appendChild(id);
           row.appendChild(phone);
+          if (table.id == "tableResBody") {
+            console.log('it is working');
+            const check = document.createElement("td");
+            check.textContent = 'Seated';
+            row.appendChild(check)
+            // button w/ class='delete'
+            // querySelectorAll class=delete
+            // iterate through
+            // onClick=delete(index)
+          }
           target.appendChild(row);
         }
-
-        // function init() {
-        //   fetch(`/api/tables`, {
-        //     method: "GET",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //   })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //       for (res of data) {
-        //         const target = table;
-        //         const row = document.createElement("tr");
-        //         const name = document.createElement("td");
-        //         const email = document.createElement("td");
-        //         const id = document.createElement("td");
-        //         const phone = document.createElement("td");
-        //         row.setAttribute("class", "text-center");
-        //         name.setAttribute("scope", "row");
-        //         name.textContent = res.name;
-        //         email.textContent = res.email;
-        //         id.textContent = res.id;
-        //         phone.textContent = res.phone;
-        //         row.appendChild(name);
-        //         row.appendChild(email);
-        //         row.appendChild(id);
-        //         row.appendChild(phone);
-        //         target.appendChild(row);
-        //       }
-        //     });
-        // }
         init();
       </script>
   </body>
